@@ -4,18 +4,20 @@ Application to train async possibilities of ES6/7 by creating a list of all word
 
 General tasks
 ---------------
-1. read file with words
-2. Generate array of arrays with words, based on first letter
-3. read input from console
-4. create switch to govern type of interaction
-5. test performance
-
+- [ ] read file with words
+- [ ] Generate array of arrays with words, based on first letter
+- [ ] read input from console
+- [ ] create switch to govern type of interaction
+- [ ] test performance
+- [x] set up repo and write down tasks
 
 Approaches to implement
 ---------------
-1. Promise
-2. Generators
-3. Communicating sequential process
+- [ ] Promise
+- [ ] Generators
+- [ ] Communicating sequential process
+- [ ] Callbacks
+- [ ] Thunks
 
 Notes
 ---------------
