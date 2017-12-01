@@ -1,0 +1,22 @@
+{
+  "name": "es6-word-constructor",
+  "version": "0.0.1",
+  "description": "Application to train async possibilities of ES6/7 by creating a list of all words that can be generated from given set of letters",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ichyr/es6-word-constructor.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ichyr/es6-word-constructor/issues"
+  },
+  "homepage": "https://github.com/ichyr/es6-word-constructor#readme"
+}
