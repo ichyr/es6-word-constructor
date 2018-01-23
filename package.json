@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/ichyr/es6-word-constructor.git"
   },
-  "author": "",
+  "author": "Ivan Chyr",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ichyr/es6-word-constructor/issues"
