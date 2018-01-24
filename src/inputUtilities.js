@@ -5,14 +5,19 @@ Set.prototype.union = function(setB) {
   }
   return union;
 }
-
+/**
+ * 
+ * 
+ * @param {any} arr 
+ * @returns {Set<String>}
+ */
 function generatePermutationsForAllItems(arr) {
-  const perm = new Set(arr)
+  let perm = new Set(arr)
   for(let i = 0; i < arr.length; i++) {
     const item = arr[i]
     const itemArr = [...item]
     const itemPermutations = generatePermutations(item)
-    perm.union(itemPermutations)
+    perm = perm.union(itemPermutations)
   }
   return perm
 }
@@ -24,6 +29,7 @@ function generatePermutationsForAllItems(arr) {
  * @returns {Set<String>}
  */
 function generatePermutations(a) {
+  // if(a = ['a', 'i']) {debugger}
   const len = a.length;
   const r = new Set();
   for (let q = 0; q < len; q++) {
@@ -72,8 +78,8 @@ function areIndeciesInArray(arrLen, idx1, idx2) {
 function swapItems(arr, arrLen, firstIdx, lastIdx) {
   if (!areIndeciesInArray(arrLen, firstIdx, lastIdx))
     throw new Error("Provided indecies are out of array bounds");
-  let temp = [...arr];
-  [temp[lastIdx], temp[firstIdx]] = [temp[firstIdx], temp[lastIdx]];
+  const temp = [...arr];
+  [temp[firstIdx], temp[lastIdx]] = [temp[lastIdx], temp[firstIdx]]
   return temp;
 }
 /**
@@ -130,6 +136,6 @@ function getArrayWithoutCurrentItem(arr, currentItemIdx) {
 exports.generateInputSet = function generateInputSet(arr) {
   const data = generateInitialSet(arr);
   const permutations = generatePermutationsForAllItems([...data]);
-  console.log(...[...permutations].sort())
+  console.log([...permutations].sort())
   return permutations;
 };
