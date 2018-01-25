@@ -1,3 +1,5 @@
+const {generateAllPermutations} = require('./heapAlgo')
+
 Set.prototype.union = function(setB) {
   var union = new Set(this);
   for (var elem of setB) {
@@ -16,29 +18,10 @@ function generatePermutationsForAllItems(arr) {
   for(let i = 0; i < arr.length; i++) {
     const item = arr[i]
     const itemArr = [...item]
-    const itemPermutations = generatePermutations(item)
+    const itemPermutations = generateAllPermutations(itemArr)
     perm = perm.union(itemPermutations)
   }
   return perm
-}
-
-/**
- * Generates all permutations of given array items
- *
- * @param {[]} a
- * @returns {Set<String>}
- */
-function generatePermutations(a) {
-  // if(a = ['a', 'i']) {debugger}
-  const len = a.length;
-  const r = new Set();
-  for (let q = 0; q < len; q++) {
-    for (let w = 0; w < len; w++) {
-      const newItem = swapItems(a, len, q, w);
-      r.add(newItem.join(''));
-    }
-  }
-  return r;
 }
 
 /**
@@ -136,6 +119,6 @@ function getArrayWithoutCurrentItem(arr, currentItemIdx) {
 exports.generateInputSet = function generateInputSet(arr) {
   const data = generateInitialSet(arr);
   const permutations = generatePermutationsForAllItems([...data]);
-  console.log([...permutations].sort())
+  console.log(...[...permutations].sort())
   return permutations;
 };
