@@ -17,7 +17,7 @@ readStream
   .on("data", function(chunk) {
     const data = chunk.split("\n");
     count += data.length;
-    dictionary = dictionary.concat(data);
+    dictionary = dictionary.concat(data.map(t => t.toLowerCase()));
   })
   .on("end", function() {
     console.log("📖", ` dictionary of  ${dictionary.length} words loaded`);
