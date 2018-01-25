@@ -9,7 +9,7 @@
 exports.simpleSearch = function simpleSearch(input, dictionary) {
     const result = []
     input.forEach(element => {
-        console.log('🚕', 'working on word ', element)
+        // console.log('🚕', 'working on word ', element)
         if (dictionary.indexOf(element) > -1 ) {
             result.push(element)
         }

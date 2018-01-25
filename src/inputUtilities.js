@@ -117,6 +117,5 @@ function getArrayWithoutCurrentItem(arr, currentItemIdx) {
 exports.generateInputSet = function generateInputSet(arr) {
   const data = generateInitialSet(arr);
   const permutations = generatePermutationsForAllItems([...data]);
-  console.log(...[...permutations].sort())
-  return permutations;
+  return [...permutations].sort();
 };
