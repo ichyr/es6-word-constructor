@@ -6,7 +6,7 @@ const {generateInputSet} = require('./src/inputUtilities')
 let inputLetterSet = fs.readFileSync('./input/input.txt', 'utf8')
 inputLetterSet = inputLetterSet.split(' ')
 
-generateInputSet(['i', 'v', 'a'])
+const inputSet = generateInputSet(['a', 'a', 'a'])
 
 // read File
 const readStream = fs.createReadStream('./lib/words.txt', 'utf8');

@@ -108,14 +108,12 @@ function generateArrayOfVariantsFromInput(arr) {
 function getArrayWithoutCurrentItem(arr, currentItemIdx) {
   return [...arr.slice(0, currentItemIdx), ...arr.slice(currentItemIdx + 1)];
 }
-
-// for ones
-// for twoes
-// for triads
-// etc.
-
-// generate all possible permutations
-
+/**
+ * Function generates all possible permutations of input letters
+ * 
+ * @param {Array<String>} arr - aray of letters from input file 
+ * @returns {Array<String>} sorted array of all permutations for given input
+ */
 exports.generateInputSet = function generateInputSet(arr) {
   const data = generateInitialSet(arr);
   const permutations = generatePermutationsForAllItems([...data]);
