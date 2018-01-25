@@ -7,7 +7,7 @@ General tasks
 - [x] read file with words
 - [ ] Generate array of arrays with words, based on first letter
 - [x] read input from input file (input is specified as space-separated letters in `input/input.txt` file)
-- [ ] create switch to govern type of interaction
+- [ ] create switch to govern type of interaction  
 - [ ] test performance
 - [x] set up repo and write down tasks
 
