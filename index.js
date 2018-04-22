@@ -5,7 +5,7 @@ const { simpleSearch } = require("./src/simpleSearch");
 
 // read input data
 let inputLetterSet = fs.readFileSync("./input/input.txt", "utf8");
-inputLetterSet = inputLetterSet.split(" ");
+inputLetterSet = [...inputLetterSet].map(_ => _.toLocaleLowerCase());
 
 const inputSet = generateInputSet(inputLetterSet);
 
