@@ -5,7 +5,7 @@ Application to train async possibilities of ES6/7 by creating a list of all word
 General tasks
 ---------------
 - [x] read file with words
-- [ ] Generate array of arrays with words, based on first letter
+- [x] Generate array of arrays with words, based on first letter
 - [x] read input from input file (input is specified as word (no trailing spaces or other characters as this will be treated as another character) in `input/input.txt` file)
 - [ ] create switch to govern type of interaction  
 - [ ] test performance
@@ -22,3 +22,11 @@ Approaches to implement
 Notes
 ---------------
 Worlds list is taken from https://github.com/dwyl/english-words
+
+
+Thunk
+----------------
+Function that has everything it needs to return you a value. Basically a function with
+some closured state or wrapper around state.
+
+Async thunk will be a function that doesn't need anything to run except a callback to be executed with return value.
