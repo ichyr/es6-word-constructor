@@ -3,7 +3,7 @@ const fs = require('fs');
 const { generateInputSet } = require('./src/inputUtilities');
 const { simpleSearch } = require('./src/simpleSearch');
 const { createInitialDictionary, digestChunk, getDictionarySections } = require('./src/dictionaryUtils');
-const { sectionedDictionarySearch } = require("./src/sectionedDictionarySearch");
+const { dictionarySearchAsync } = require('./src/sectionedDictionarySearch');
 
 // read input data
 let inputLetterSet = fs.readFileSync('./input/input.txt', 'utf8');
@@ -22,12 +22,13 @@ readStream
     digestChunk(data, dictionary);
   })
   .on('end', function() {
-    console.log('📖', ` dictionary of  ${dictionary.length} words loaded`);
+    console.log('📖', ` dictionary of  ${count} words loaded`);
     const start = Date.now();
-    const correctWords = sectionedDictionarySearch(inputSet, dictionary);
-    const end = Date.now();
+    dictionarySearchAsync(inputSet, dictionary, correctWords => {
+      const end = Date.now();
 
-    console.log('⏰', ' it took ', end - start, ' ms to finish');
-    console.log('📖', ` found ${correctWords.length} words in dictionary`);
-    console.log('They are the following', ...correctWords);
+      console.log('⏰', ' it took ', end - start, ' ms to finish');
+      console.log('📖', ` found ${correctWords.length} words in dictionary`);
+      console.log('They are the following', ...correctWords);
+    });
   });

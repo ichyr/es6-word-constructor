@@ -9,10 +9,9 @@ const SEGMENTS = [...ALPHABET.split(''), 'other'];
  */
 exports.createInitialDictionary = function createInitialDictionary() {
   const result = {};
-  for (let key in SEGMENTS) {
+  for (let key of SEGMENTS) {
     result[key] = [];
   }
-  console.log('😛 => ', SEGMENTS);
   return result;
 };
 
@@ -44,11 +43,9 @@ exports.getDictionarySections = function getDictionarySections() {
  */
 exports.digestChunk = function digestChunk(data, dictionary) {
   data.forEach(word => {
-    const section = selectDictionarySection(word);
-    console.log('❤️');
-    console.log(word);
-    console.log(section);
-    console.log(Object.keys(dictionary));
-    dictionary[section].push(word.toLowerCase());
+    if (word) {
+      const section = selectDictionarySection(word);
+      dictionary[section].push(word.toLowerCase());
+    }
   });
 };

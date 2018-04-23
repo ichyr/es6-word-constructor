@@ -8,23 +8,28 @@ const { simpleSearchAsync } = require('./simpleSearch');
  * @returns {string[]} list of words from input array, found in dictionary
  */
 exports.dictionarySearch = function dictionarySearch(input, dictionary) {
-  const result = [];
+  let result = [];
   for (const key in dictionary) {
-    simpleSearchAsync(index, dictionary[key], data => {
-      console.log('🌷 completed for section ', key);
-      result.push(data);
+    simpleSearchAsync(input, dictionary[key], data => {
+      result = [...result, ...data];
     });
   }
   return result;
 };
-
-exports.dictionarySearchAsync = function dictionarySearch(input, dictionary, cb) {
-    const result = [];
-    for (const key in dictionary) {
-      simpleSearchAsync(index, dictionary[key], data => {
-        console.log('🌷 completed for section ', key);
-        result.push(data);
-      });
-    }
-    cb(result);
-  };
+/**
+ * Async version of dictionarySearch function. Passes resulting value to third
+ * argument - callback function.
+ * 
+ * @param {string[]} input array of test words
+ * @param {string[]} dictionary array of words 
+ * @param {(data: string[]) => void} cb 
+ */
+exports.dictionarySearchAsync = function dictionarySearchAsync(input, dictionary, cb) {
+  let result = [];
+  for (const key in dictionary) {
+    simpleSearchAsync(input, dictionary[key], data => {
+      result = [...result, ...data];
+    });
+  }
+  cb(result);
+};
