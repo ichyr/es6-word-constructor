@@ -3,6 +3,7 @@ const fs = require('fs');
 const { generateInputSet } = require('./src/inputUtilities');
 const { simpleSearch } = require('./src/simpleSearch');
 const { createInitialDictionary, digestChunk, getDictionarySections } = require('./src/dictionaryUtils');
+const { sectionedDictionarySearch } = require("./src/sectionedDictionarySearch");
 
 // read input data
 let inputLetterSet = fs.readFileSync('./input/input.txt', 'utf8');
@@ -23,7 +24,7 @@ readStream
   .on('end', function() {
     console.log('📖', ` dictionary of  ${dictionary.length} words loaded`);
     const start = Date.now();
-    const correctWords = simpleSearch(inputSet, dictionary);
+    const correctWords = sectionedDictionarySearch(inputSet, dictionary);
     const end = Date.now();
 
     console.log('⏰', ' it took ', end - start, ' ms to finish');
