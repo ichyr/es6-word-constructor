@@ -15,6 +15,7 @@ const inputSet = generateInputSet(inputLetterSet);
 const readStream = fs.createReadStream('./lib/words.txt', 'utf8');
 let count = 0;
 let dictionary = createInitialDictionary();
+
 readStream
   .on('data', function(chunk) {
     const data = chunk.split('\n');

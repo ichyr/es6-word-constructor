@@ -7,7 +7,7 @@ const { simpleSearchAsync } = require('./simpleSearch');
  * @param {string[]} dictionary - content of dictionary
  * @returns {string[]} list of words from input array, found in dictionary
  */
-exports.dictionarySearch = function dictionarySearch(input, dictionary) {
+function dictionarySearch(input, dictionary) {
   let result = [];
   for (const key in dictionary) {
     simpleSearchAsync(input, dictionary[key], data => {
@@ -24,12 +24,11 @@ exports.dictionarySearch = function dictionarySearch(input, dictionary) {
  * @param {string[]} dictionary array of words 
  * @param {(data: string[]) => void} cb 
  */
-exports.dictionarySearchAsync = function dictionarySearchAsync(input, dictionary, cb) {
-  let result = [];
-  for (const key in dictionary) {
-    simpleSearchAsync(input, dictionary[key], data => {
-      result = [...result, ...data];
-    });
-  }
-  cb(result);
+function dictionarySearchAsync(input, dictionary, cb) {
+  cb(dictionarySearch(input, dictionary));
 };
+
+module.exports = {
+  dictionarySearch,
+  dictionarySearchAsync
+}
