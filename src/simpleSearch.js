@@ -7,7 +7,6 @@
  */
 function simpleSearch(input, dictionary) {
   const result = [];
-  console.log(input);
   input.forEach(element => {
     if (dictionary.indexOf(element) > -1) {
       result.push(element);
