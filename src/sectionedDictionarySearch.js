@@ -1,4 +1,5 @@
 const { simpleSearchAsync } = require('./simpleSearch');
+const { makeThunk } = require('./02_thunks/00_utils');
 
 /**
  * Function that uses Array.indexOf to find occurances of words in dictionary
@@ -28,7 +29,27 @@ function dictionarySearchAsync(input, dictionary, cb) {
   cb(dictionarySearch(input, dictionary));
 };
 
+function dictionarySearchThunk(input, dictionary) {
+  let thunks = [];
+  let result = [];
+  for (const key in dictionary) {
+    thunks.push(makeThunk(simpleSearchAsync, input, dictionary[key]));
+  }
+
+  thunks.forEach(thunk => thunk(data => {
+    result = [...result, ...data];
+  }));
+
+  return result;
+}
+
+function dictionarySearchThunkAsync(input, dictionary, cb) {
+  cb(dictionarySearchThunk(input, dictionary));
+};
+
 module.exports = {
   dictionarySearch,
-  dictionarySearchAsync
+  dictionarySearchAsync,
+  dictionarySearchThunk,
+  dictionarySearchThunkAsync,
 }
