@@ -1,4 +1,4 @@
-const { simpleSearchAsync } = require('./simpleSearch');
+const { simpleSearchAsync, simpleSearchPromise } = require('./simpleSearch');
 const { makeThunk } = require('./03_thunks/00_utils');
 
 /**
@@ -47,9 +47,22 @@ function dictionarySearchThunkAsync(input, dictionary, cb) {
   cb(dictionarySearchThunk(input, dictionary));
 };
 
+function dictionarySearchPromise(input, dictionary) {
+  return new Promise(function(resolve, reject) {
+      let searches = [];
+      for (const key in dictionary) {
+        searches.push(simpleSearchPromise(input[key], dictionary[key]));
+      }
+      Promise.all(searches).then(function(data) {
+        resolve(data.reduce((aggr, curr) => [...aggr, ...curr], []));
+      })
+  })
+}
+
 module.exports = {
   dictionarySearch,
   dictionarySearchAsync,
   dictionarySearchThunk,
   dictionarySearchThunkAsync,
+  dictionarySearchPromise
 }
