@@ -1,13 +1,13 @@
 // entry point
 const fs = require("fs");
-const { generateInputSet } = require("../inputUtilities");
+const { generateInputSetOriginal } = require("../inputUtilities");
 const { simpleSearch } = require("../simpleSearch");
 
 // read input data
 let inputLetterSet = fs.readFileSync("../../input/input.txt", "utf8");
 inputLetterSet = [...inputLetterSet].map(_ => _.toLocaleLowerCase());
 
-const inputSet = generateInputSet(inputLetterSet);
+const inputSet = generateInputSetOriginal(inputLetterSet);
 
 // read File
 const readStream = fs.createReadStream("../../lib/words.txt", "utf8");

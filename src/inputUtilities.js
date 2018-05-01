@@ -114,6 +114,18 @@ function getArrayWithoutCurrentItem(arr, currentItemIdx) {
  * @param {Array<String>} arr - aray of letters from input file
  * @returns {Array<String>} sorted array of all permutations for given input
  */
+exports.generateInputSetOriginal = function generateInputSet(arr) {
+  const data = generateInitialSet(arr);
+  const permutations = generatePermutationsForAllItems([...data]);
+  return [...permutations].sort();
+};
+
+/**
+ * Function generates all possible permutations of input letters
+ *
+ * @param {Array<String>} arr - aray of letters from input file
+ * @returns {Array<String>} sorted array of all permutations for given input
+ */
 exports.generateInputSet = function generateInputSet(arr) {
   const data = generateInitialSet(arr);
   const permutations = generatePermutationsForAllItems([...data]);
