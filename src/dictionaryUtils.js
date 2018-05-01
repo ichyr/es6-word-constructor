@@ -48,4 +48,5 @@ exports.digestChunk = function digestChunk(data, dictionary) {
       dictionary[section].push(word.toLowerCase());
     }
   });
+  return dictionary;
 };

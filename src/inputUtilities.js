@@ -1,27 +1,28 @@
-const {generateAllPermutations} = require('./heapAlgo')
+const { generateAllPermutations } = require('./heapAlgo');
+const { createInitialDictionary, digestChunk } = require('./dictionaryUtils');
 
 Set.prototype.union = function(setB) {
   var union = new Set(this);
   for (var elem of setB) {
-      union.add(elem);
+    union.add(elem);
   }
   return union;
-}
+};
 /**
- * 
- * 
- * @param {any} arr 
+ *
+ *
+ * @param {any} arr
  * @returns {Set<String>}
  */
 function generatePermutationsForAllItems(arr) {
-  let perm = new Set(arr)
-  for(let i = 0; i < arr.length; i++) {
-    const item = arr[i]
-    const itemArr = [...item]
-    const itemPermutations = generateAllPermutations(itemArr)
-    perm = perm.union(itemPermutations)
+  let perm = new Set(arr);
+  for (let i = 0; i < arr.length; i++) {
+    const item = arr[i];
+    const itemArr = [...item];
+    const itemPermutations = generateAllPermutations(itemArr);
+    perm = perm.union(itemPermutations);
   }
-  return perm
+  return perm;
 }
 
 /**
@@ -59,10 +60,9 @@ function areIndeciesInArray(arrLen, idx1, idx2) {
  * @returns {[]}
  */
 function swapItems(arr, arrLen, firstIdx, lastIdx) {
-  if (!areIndeciesInArray(arrLen, firstIdx, lastIdx))
-    throw new Error("Provided indecies are out of array bounds");
+  if (!areIndeciesInArray(arrLen, firstIdx, lastIdx)) throw new Error('Provided indecies are out of array bounds');
   const temp = [...arr];
-  [temp[firstIdx], temp[lastIdx]] = [temp[lastIdx], temp[firstIdx]]
+  [temp[firstIdx], temp[lastIdx]] = [temp[lastIdx], temp[firstIdx]];
   return temp;
 }
 /**
@@ -72,8 +72,8 @@ function swapItems(arr, arrLen, firstIdx, lastIdx) {
  * @returns {Set<[]>}
  */
 function generateInitialSet(arr) {
-  const result = generateArrayOfVariantsFromInput(arr)
-  return new Set(result)
+  const result = generateArrayOfVariantsFromInput(arr);
+  return new Set(result);
 }
 /**
  *
@@ -85,17 +85,17 @@ function generateArrayOfVariantsFromInput(arr) {
   const result = new Set();
   arr.map((currentItem, itemIdx) => {
     const residualArray = getArrayWithoutCurrentItem(arr, itemIdx);
-    if(residualArray.length === 0) return currentItem
+    if (residualArray.length === 0) return currentItem;
     // Adds current elelemtn from input array with tail of elements from partial string
     residualArray.map((item, itemIdx) => {
       const value = [currentItem, ...residualArray.slice(0, itemIdx)].sort();
-      result.add(value.join(""));
+      result.add(value.join(''));
     });
     // Adds full partial string to Set
-    result.add(residualArray.join(""));
+    result.add(residualArray.join(''));
   });
   // Adds full input array as string
-  result.add(arr.join(""));
+  result.add(arr.join(''));
   return [...result];
 }
 /**
@@ -110,12 +110,14 @@ function getArrayWithoutCurrentItem(arr, currentItemIdx) {
 }
 /**
  * Function generates all possible permutations of input letters
- * 
- * @param {Array<String>} arr - aray of letters from input file 
+ *
+ * @param {Array<String>} arr - aray of letters from input file
  * @returns {Array<String>} sorted array of all permutations for given input
  */
 exports.generateInputSet = function generateInputSet(arr) {
   const data = generateInitialSet(arr);
   const permutations = generatePermutationsForAllItems([...data]);
-  return [...permutations].sort();
+  // return [...permutations].sort();
+  const dictionary = createInitialDictionary();
+  return digestChunk(permutations, dictionary);
 };

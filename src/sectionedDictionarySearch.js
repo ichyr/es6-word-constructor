@@ -11,7 +11,7 @@ const { makeThunk } = require('./02_thunks/00_utils');
 function dictionarySearch(input, dictionary) {
   let result = [];
   for (const key in dictionary) {
-    simpleSearchAsync(input, dictionary[key], data => {
+    simpleSearchAsync(input[key], dictionary[key], data => {
       result = [...result, ...data];
     });
   }
@@ -33,7 +33,7 @@ function dictionarySearchThunk(input, dictionary) {
   let thunks = [];
   let result = [];
   for (const key in dictionary) {
-    thunks.push(makeThunk(simpleSearchAsync, input, dictionary[key]));
+    thunks.push(makeThunk(simpleSearchAsync, input[key], dictionary[key]));
   }
 
   thunks.forEach(thunk => thunk(data => {
