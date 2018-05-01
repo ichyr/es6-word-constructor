@@ -1,5 +1,5 @@
 const { simpleSearchAsync } = require('./simpleSearch');
-const { makeThunk } = require('./02_thunks/00_utils');
+const { makeThunk } = require('./03_thunks/00_utils');
 
 /**
  * Function that uses Array.indexOf to find occurances of words in dictionary
