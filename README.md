@@ -14,7 +14,7 @@ General tasks
 Approaches to implement
 ---------------
 - [x] Callbacks
-- [ ] Thunks
+- [x] Thunks
 - [ ] Promise
 - [ ] Generators
 - [ ] Communicating sequential process
