@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/ichyr/es6-word-constructor/issues"
   },
-  "homepage": "https://github.com/ichyr/es6-word-constructor#readme"
+  "homepage": "https://github.com/ichyr/es6-word-constructor#readme",
+  "dependencies": {
+    "progress": "^2.0.0"
+  }
 }
