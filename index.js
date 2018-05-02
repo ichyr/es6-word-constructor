@@ -1,11 +1,9 @@
-const { makeThunk } = require('./src/02_thunks/00_utils');
-
 // entry point
 const fs = require('fs');
 const { generateInputSet } = require('./src/inputUtilities');
 const { simpleSearch } = require('./src/simpleSearch');
 const { createInitialDictionary, digestChunk, getDictionarySections } = require('./src/dictionaryUtils');
-const { dictionarySearchThunkAsync } = require('./src/sectionedDictionarySearch');
+const { dictionarySearchAsync } = require('./src/sectionedDictionarySearch');
 
 // read input data
 let inputLetterSet = fs.readFileSync('./input/input.txt', 'utf8');
@@ -27,10 +25,7 @@ readStream
   .on('end', function() {
     console.log('📖', ` dictionary of  ${count} words loaded`);
     const start = Date.now();
-
-    const dictionarySearchThunk = makeThunk(dictionarySearchThunkAsync, inputSet, dictionary);
-
-    dictionarySearchThunk(correctWords => {
+    dictionarySearchAsync(inputSet, dictionary, correctWords => {
       const end = Date.now();
 
       console.log('⏰', ' it took ', end - start, ' ms to finish');

@@ -1,4 +1,4 @@
-const { simpleSearchAsync, simpleSearchPromise } = require('./simpleSearch');
+const { simpleSearch, simpleSearchAsync, simpleSearchPromise } = require('./simpleSearch');
 const { makeThunk } = require('./03_thunks/00_utils');
 
 /**
@@ -16,18 +16,18 @@ function dictionarySearch(input, dictionary) {
     });
   }
   return result;
-};
+}
 /**
  * Async version of dictionarySearch function. Passes resulting value to third
  * argument - callback function.
- * 
+ *
  * @param {string[]} input array of test words
- * @param {string[]} dictionary array of words 
- * @param {(data: string[]) => void} cb 
+ * @param {string[]} dictionary array of words
+ * @param {(data: string[]) => void} cb
  */
 function dictionarySearchAsync(input, dictionary, cb) {
   cb(dictionarySearch(input, dictionary));
-};
+}
 
 function dictionarySearchThunk(input, dictionary) {
   let thunks = [];
@@ -36,27 +36,46 @@ function dictionarySearchThunk(input, dictionary) {
     thunks.push(makeThunk(simpleSearchAsync, input[key], dictionary[key]));
   }
 
-  thunks.forEach(thunk => thunk(data => {
-    result = [...result, ...data];
-  }));
+  thunks.forEach(thunk =>
+    thunk(data => {
+      result = [...result, ...data];
+    })
+  );
 
   return result;
 }
 
 function dictionarySearchThunkAsync(input, dictionary, cb) {
   cb(dictionarySearchThunk(input, dictionary));
-};
+}
 
 function dictionarySearchPromise(input, dictionary) {
   return new Promise(function(resolve, reject) {
-      let searches = [];
-      for (const key in dictionary) {
-        searches.push(simpleSearchPromise(input[key], dictionary[key]));
-      }
-      Promise.all(searches).then(function(data) {
-        resolve(data.reduce((aggr, curr) => [...aggr, ...curr], []));
-      })
-  })
+    let searches = [];
+    for (const key in dictionary) {
+      searches.push(simpleSearchPromise(input[key], dictionary[key]));
+    }
+    Promise.all(searches).then(function(data) {
+      resolve(data.reduce((aggr, curr) => [...aggr, ...curr], []));
+    });
+  });
+}
+
+function dictionarySearchRawGenerator(input, dictionary, cb) {
+  let results = [];
+
+  function* digestInput(input, dictionary) {
+    for (const key in dictionary) {
+      yield simpleSearch(input[key], dictionary[key]);
+    }
+  }
+
+  const process = digestInput(input, dictionary);
+  for (const result of process) {
+    results = [...results, ...result];
+  }
+
+  cb(results);
 }
 
 module.exports = {
@@ -64,5 +83,6 @@ module.exports = {
   dictionarySearchAsync,
   dictionarySearchThunk,
   dictionarySearchThunkAsync,
-  dictionarySearchPromise
-}
+  dictionarySearchPromise,
+  dictionarySearchRawGenerator
+};

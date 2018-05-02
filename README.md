@@ -16,7 +16,8 @@ Approaches to implement
 - [x] Callbacks
 - [x] Thunks
 - [x] Promise
-- [ ] Generators
+- [x] Generators
+- [ ] Generators + Promises
 - [ ] Communicating sequential process
 
 Notes
