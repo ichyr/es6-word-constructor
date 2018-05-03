@@ -1,5 +1,7 @@
 # es6-word-constructor
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5656bb4e41064d2d96a791da584f3974)](https://www.codacy.com/app/ichyr/es6-word-constructor?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ichyr/es6-word-constructor&amp;utm_campaign=Badge_Grade)
+
 Application to train async possibilities of ES6/7 by creating a list of all words that can be generated from given set of letters.
 
 General tasks
