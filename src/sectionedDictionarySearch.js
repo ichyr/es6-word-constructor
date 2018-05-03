@@ -64,6 +64,9 @@ function dictionarySearchPromise(input, dictionary) {
 function dictionarySearchRawGenerator(input, dictionary, cb) {
   let results = [];
 
+  // do i need something to happend in parallel ->
+  // store those things in intermediate promises and then sequence their responses
+  // sequentially -> run them after yield keyword
   function* digestInput(input, dictionary) {
     for (const key in dictionary) {
       yield simpleSearch(input[key], dictionary[key]);
