@@ -1,4 +1,8 @@
-const { simpleSearch, simpleSearchAsync, simpleSearchPromise } = require('./simpleSearch');
+const {
+  simpleSearch,
+  simpleSearchAsync,
+  simpleSearchPromise
+} = require('./simpleSearch');
 const { makeThunk } = require('./03_thunks/00_utils');
 
 /**

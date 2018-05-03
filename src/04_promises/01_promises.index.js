@@ -8,13 +8,15 @@ const readStream = fs.createReadStream('../../lib/words.txt', 'utf8');
 let count = [0];
 let dictionary = createInitialDictionary();
 
-readStream.on('data', digestDataChunk(dictionary, digestChunk, count)).on('end', function() {
-  console.log('📖', ` dictionary of  ${count} words loaded`);
-  const start = Date.now();
+readStream
+  .on('data', digestDataChunk(dictionary, digestChunk, count))
+  .on('end', function() {
+    console.log('📖', ` dictionary of  ${count} words loaded`);
+    const start = Date.now();
 
-  const results = dictionarySearchPromise(inputSet, dictionary);
+    const results = dictionarySearchPromise(inputSet, dictionary);
 
-  results.then(function(correctWords) {
-    printResult({ start, correctWords });
+    results.then(function(correctWords) {
+      printResult({ start, correctWords });
+    });
   });
-});
