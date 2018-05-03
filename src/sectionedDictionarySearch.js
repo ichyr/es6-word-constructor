@@ -4,6 +4,11 @@ const {
   simpleSearchPromise
 } = require('./simpleSearch');
 const { makeThunk } = require('./03_thunks/00_utils');
+const {
+  startPool,
+  endPool,
+  execute
+} = require('./10_concurrency/01_tread_pool');
 
 /**
  * Function that uses Array.indexOf to find occurances of words in dictionary
@@ -18,9 +23,13 @@ function dictionarySearch(input, dictionary) {
     result = [...result, ...data];
   }
 
+  startPool();
+
   for (const key in dictionary) {
-    simpleSearchAsync(input[key], dictionary[key], digestSimpleSearchAsync);
+    execute(input[key], dictionary[key], digestSimpleSearchAsync);
   }
+
+  endPool();
   return result;
 }
 /**
