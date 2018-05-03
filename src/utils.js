@@ -1,5 +1,3 @@
-/*eslint-disable no-console*/
-
 const { generateInputSet } = require('./inputUtilities');
 
 exports.printResult = function({ start, correctWords }) {

@@ -9,7 +9,6 @@ let count = [0];
 let dictionary = createInitialDictionary();
 
 readStream.on('data', digestDataChunk(dictionary, digestChunk, count)).on('end', function() {
-  /*eslint-disable-next-line no-console*/
   console.log('📖', ` dictionary of  ${count} words loaded`);
   const start = Date.now();
   dictionarySearchAsync(inputSet, dictionary, correctWords => {

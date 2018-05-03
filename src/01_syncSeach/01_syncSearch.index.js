@@ -20,7 +20,6 @@ readStream
     dictionary = dictionary.concat(data.map(t => t.toLowerCase()));
   })
   .on('end', function() {
-    /*eslint-disable-next-line no-console*/
     console.log('📖', ` dictionary of  ${dictionary.length} words loaded`);
     const start = Date.now();
     const correctWords = simpleSearch(inputSet, dictionary);
