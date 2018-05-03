@@ -57,9 +57,13 @@ function dictionarySearchPromise(input, dictionary) {
     for (const key in dictionary) {
       searches.push(simpleSearchPromise(input[key], dictionary[key]));
     }
-    Promise.all(searches).then(function(data) {
-      resolve(data.reduce((aggr, curr) => [...aggr, ...curr], []));
-    });
+    Promise.all(searches)
+      .then(function(data) {
+        resolve(data.reduce((aggr, curr) => [...aggr, ...curr], []));
+      })
+      .catch(function(err) {
+        reject(err);
+      });
   });
 }
 

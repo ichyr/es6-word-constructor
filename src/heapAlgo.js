@@ -33,4 +33,4 @@ exports.generateAllPermutations = function generateAllPermutations(a) {
     }
   }
   return [...result];
-}
+};

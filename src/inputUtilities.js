@@ -26,47 +26,6 @@ function generatePermutationsForAllItems(arr) {
 }
 
 /**
- * Ensures that the first index is less then second one
- *
- * @param {number} a
- * @param {number} b
- * @returns
- */
-function ensureIndexOrder(a, b) {
-  return a > b ? [b, a] : [a, b];
-}
-
-/**
- * Ensures two indexes are in score of array bounds.
- *
- * @param {number} arrLen
- * @param {number} idx1
- * @param {number} idx2
- * @returns {boolean}
- */
-function areIndeciesInArray(arrLen, idx1, idx2) {
-  return 0 <= idx1 && idx1 < arrLen && 0 <= idx2 && idx2 < arrLen;
-}
-
-/**
- * Swaps two items in array by given indexes.
- * Ensures indexes were in correct order.
- * Throws exception if the index is out of bound of array.
- *
- * @param {[]]} arr
- * @param {number} arrLen
- * @param {number} firstIdx
- * @param {number} lastIdx
- * @returns {[]}
- */
-function swapItems(arr, arrLen, firstIdx, lastIdx) {
-  if (!areIndeciesInArray(arrLen, firstIdx, lastIdx)) throw new Error('Provided indecies are out of array bounds');
-  const temp = [...arr];
-  [temp[firstIdx], temp[lastIdx]] = [temp[lastIdx], temp[firstIdx]];
-  return temp;
-}
-
-/**
  *
  *
  * @param {[]} arr

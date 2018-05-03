@@ -24,7 +24,7 @@ function simpleSearchPromise(input, dictionary) {
     try {
       resolve(simpleSearch(input, dictionary));
     } catch (error) {
-      resolve(error);
+      reject(error);
     }
   });
 }

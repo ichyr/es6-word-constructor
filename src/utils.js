@@ -1,3 +1,5 @@
+/*eslint-disable no-console*/
+
 const { generateInputSet } = require('./inputUtilities');
 
 exports.printResult = function({ start, correctWords }) {
@@ -10,7 +12,7 @@ exports.printResult = function({ start, correctWords }) {
 exports.digestDataChunk = function(dictionary, digestChunk, count) {
   return function(chunk) {
     const data = chunk.split('\n');
-    count += data.length;
+    count[0] += data.length;
     digestChunk(data, dictionary);
   };
 };

@@ -6,9 +6,9 @@
  * @returns function that take the callback that is executed with thunk returning value.
  */
 exports.makeThunk = function(fn) {
-  const args = [].slice.call(arguments, 1);
-  return function(cb) {
-    args.push(cb);
-    fn.apply(null, args);
-  };
-}
+    const args = [].slice.call(arguments, 1);
+    return function(cb) {
+        args.push(cb);
+        fn.apply(null, args);
+    };
+};
