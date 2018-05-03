@@ -65,16 +65,18 @@ function swapItems(arr, arrLen, firstIdx, lastIdx) {
   [temp[firstIdx], temp[lastIdx]] = [temp[lastIdx], temp[firstIdx]];
   return temp;
 }
+
 /**
- * Generates a set of arrays from initial input data
+ *
  *
  * @param {[]} arr
- * @returns {Set<[]>}
+ * @param {number} currentItemIdx
+ * @returns {[]}
  */
-function generateInitialSet(arr) {
-  const result = generateArrayOfVariantsFromInput(arr);
-  return new Set(result);
+function getArrayWithoutCurrentItem(arr, currentItemIdx) {
+  return [...arr.slice(0, currentItemIdx), ...arr.slice(currentItemIdx + 1)];
 }
+
 /**
  *
  *
@@ -98,23 +100,25 @@ function generateArrayOfVariantsFromInput(arr) {
   result.add(arr.join(''));
   return [...result];
 }
+
 /**
- *
+ * Generates a set of arrays from initial input data
  *
  * @param {[]} arr
- * @param {number} currentItemIdx
- * @returns {[]}
+ * @returns {Set<[]>}
  */
-function getArrayWithoutCurrentItem(arr, currentItemIdx) {
-  return [...arr.slice(0, currentItemIdx), ...arr.slice(currentItemIdx + 1)];
+function generateInitialSet(arr) {
+  const result = generateArrayOfVariantsFromInput(arr);
+  return new Set(result);
 }
+
 /**
  * Function generates all possible permutations of input letters
  *
  * @param {Array<String>} arr - aray of letters from input file
  * @returns {Array<String>} sorted array of all permutations for given input
  */
-exports.generateInputSetOriginal = function generateInputSet(arr) {
+exports.generateInputSetOriginal = function(arr) {
   const data = generateInitialSet(arr);
   const permutations = generatePermutationsForAllItems([...data]);
   return [...permutations].sort();
@@ -126,7 +130,7 @@ exports.generateInputSetOriginal = function generateInputSet(arr) {
  * @param {Array<String>} arr - aray of letters from input file
  * @returns {Array<String>} sorted array of all permutations for given input
  */
-exports.generateInputSet = function generateInputSet(arr) {
+exports.generateInputSet = function(arr) {
   const data = generateInitialSet(arr);
   const permutations = generatePermutationsForAllItems([...data]);
   // return [...permutations].sort();

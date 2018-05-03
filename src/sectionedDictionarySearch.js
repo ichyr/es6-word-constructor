@@ -10,10 +10,12 @@ const { makeThunk } = require('./03_thunks/00_utils');
  */
 function dictionarySearch(input, dictionary) {
   let result = [];
+  function digestSimpleSearchAsync(data) {
+    result = [...result, ...data];
+  }
+
   for (const key in dictionary) {
-    simpleSearchAsync(input[key], dictionary[key], data => {
-      result = [...result, ...data];
-    });
+    simpleSearchAsync(input[key], dictionary[key], digestSimpleSearchAsync);
   }
   return result;
 }
