@@ -34,7 +34,7 @@ function dictionarySearch(input, dictionary) {
  * @param {(data: string[]) => void} cb
  */
 function dictionarySearchThreaded(input, dictionary, cb) {
-  const pool = new ThreadPool();
+  const pool = new ThreadPool(digestSimpleSearchAsync);
   let results = [];
   let counter = Object.keys(dictionary);
 

@@ -1,12 +1,13 @@
 const { fork } = require('child_process');
 
-const POOL_CAPACITY = 4;
+const POOL_CAPACITY = 8;
 
 class ThreadPool {
-  constructor() {
+  constructor(executionCallback) {
     this.pool = [];
     this.nextIndex = 0;
     this.startPool(POOL_CAPACITY);
+    this.cb = executionCallback;
   }
   /**
    * Get index of next thread for round robin algorithm
@@ -29,7 +30,14 @@ class ThreadPool {
   startPool(count) {
     for (let i = 0; i < count; i++) {
       this.pool.push(fork('../10_concurrency/02_search.js'));
+      this.pool[i].on('message', data => {
+        // console.log(`POOL ::: RESPONSE for ${data.key}`);
+        // console.log(data);
+        this.cb(data);
+      });
     }
+
+    
   }
 
   /**
@@ -41,16 +49,11 @@ class ThreadPool {
    * @param {any} cb callback to be called when
    * @memberof ThreadPool
    */
-  execute(input, dictionary, key, cb) {
+  execute(input, dictionary, key) {
     const idx = this.getNextIndex();
     const data = { input, dictionary, key };
-    console.log(`POOL ::: REQUEST for ${key}`);
+    // console.log(`POOL ::: REQUEST for ${key}`);
     this.pool[idx].send(data);
-    this.pool[idx].on('message', data => {
-      console.log(`POOL ::: RESPONSE for ${key}`);
-      console.log(data);
-      cb(data);
-    });
   }
 
   /**
