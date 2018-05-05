@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { createInitialDictionary, digestChunk } = require('../dictionaryUtils');
-const { dictionarySearchAsync } = require('../sectionedDictionarySearch');
+const { dictionarySearchThreaded } = require('../sectionedDictionarySearch');
 const { printResult, digestDataChunk, getInputSet } = require('../utils');
 
 const inputSet = getInputSet(fs, '../../input/input.txt');
@@ -13,7 +13,7 @@ readStream
   .on('end', function() {
     console.log('📖', ` dictionary of  ${count} words loaded`);
     const start = Date.now();
-    dictionarySearchAsync(inputSet, dictionary, correctWords => {
+    dictionarySearchThreaded(inputSet, dictionary, correctWords => {
       printResult({ start, correctWords });
     });
   });

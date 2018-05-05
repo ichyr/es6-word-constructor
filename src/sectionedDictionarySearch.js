@@ -13,7 +13,27 @@ const { ThreadPool } = require('./10_concurrency/01_tread_pool');
  * @param {string[]} dictionary - content of dictionary
  * @returns {string[]} list of words from input array, found in dictionary
  */
-function dictionarySearch(input, dictionary, cb) {
+function dictionarySearch(input, dictionary) {
+  let result = [];
+  function digestSimpleSearchAsync(data) {
+    result = [...result, ...data];
+  }
+
+  for (const key in dictionary) {
+    simpleSearchAsync(input[key], dictionary[key], digestSimpleSearchAsync);
+  }
+  return result;
+}
+
+/**
+ * Async threaded version of dictionarySearch function. Passes resulting value to third
+ * argument - callback function.
+ *
+ * @param {string[]} input array of test words
+ * @param {string[]} dictionary array of words
+ * @param {(data: string[]) => void} cb
+ */
+function dictionarySearchThreaded(input, dictionary, cb) {
   let result = [];
   let counter = Object.keys(dictionary);
 
@@ -31,9 +51,8 @@ function dictionarySearch(input, dictionary, cb) {
   for (const key in dictionary) {
     pool.execute(input[key], dictionary[key], key, digestSimpleSearchAsync);
   }
-
-  return result;
 }
+
 /**
  * Async version of dictionarySearch function. Passes resulting value to third
  * argument - callback function.
@@ -108,5 +127,6 @@ module.exports = {
   dictionarySearchThunk,
   dictionarySearchThunkAsync,
   dictionarySearchPromise,
-  dictionarySearchRawGenerator
+  dictionarySearchRawGenerator,
+  dictionarySearchThreaded
 };
