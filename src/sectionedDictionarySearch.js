@@ -89,7 +89,7 @@ function dictionarySearchPromise(input, dictionary) {
       .catch(function(err) {
         reject(err);
         progressBar.stop();        
-      })
+      });
   });
 }
 
