@@ -44,7 +44,7 @@ class ThreadPool {
   execute(input, dictionary, key, cb) {
     const idx = this.getNextIndex();
     const data = { input, dictionary, key };
-    this.pool[idx].send(data, key);
+    this.pool[idx].send(data);
     this.pool[idx].on('message', cb);
   }
 

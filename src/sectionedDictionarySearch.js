@@ -34,19 +34,22 @@ function dictionarySearch(input, dictionary) {
  * @param {(data: string[]) => void} cb
  */
 function dictionarySearchThreaded(input, dictionary, cb) {
-  let result = [];
+  const pool = new ThreadPool();
+  let results = [];
   let counter = Object.keys(dictionary);
 
   function onProcessFinish(key) {
     counter = counter.filter(elem => elem !== key);
-    return counter.length ? null : cb(result);
-  }
-  function digestSimpleSearchAsync(data, key) {
-    result = [...result, ...data];
-    onProcessFinish(key);
+    if (!counter.length) {
+      cb(results);
+      pool.endPool();
+    }
   }
 
-  const pool = new ThreadPool();
+  function digestSimpleSearchAsync({ result, key }) {
+    results = [...results, ...result];
+    onProcessFinish(key);
+  }
 
   for (const key in dictionary) {
     pool.execute(input[key], dictionary[key], key, digestSimpleSearchAsync);
