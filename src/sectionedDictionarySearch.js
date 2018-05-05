@@ -4,6 +4,7 @@ const {
   simpleSearchPromise
 } = require('./simpleSearch');
 const { makeThunk } = require('./03_thunks/00_utils');
+const { ThreadPool } = require('./10_concurrency/01_tread_pool');
 
 /**
  * Function that uses Array.indexOf to find occurances of words in dictionary
@@ -23,6 +24,38 @@ function dictionarySearch(input, dictionary) {
   }
   return result;
 }
+
+/**
+ * Async threaded version of dictionarySearch function. Passes resulting value to third
+ * argument - callback function.
+ *
+ * @param {string[]} input array of test words
+ * @param {string[]} dictionary array of words
+ * @param {(data: string[]) => void} cb
+ */
+function dictionarySearchThreaded(input, dictionary, cb) {
+  const pool = new ThreadPool(digestSimpleSearchAsync);
+  let results = [];
+  let counter = Object.keys(dictionary);
+
+  function onProcessFinish(key) {
+    counter = counter.filter(elem => elem !== key);
+    if (!counter.length) {
+      cb(results);
+      pool.endPool();
+    }
+  }
+
+  function digestSimpleSearchAsync({ result, key }) {
+    results = [...results, ...result];
+    onProcessFinish(key);
+  }
+
+  for (const key in dictionary) {
+    pool.execute(input[key], dictionary[key], key, digestSimpleSearchAsync);
+  }
+}
+
 /**
  * Async version of dictionarySearch function. Passes resulting value to third
  * argument - callback function.
@@ -97,5 +130,6 @@ module.exports = {
   dictionarySearchThunk,
   dictionarySearchThunkAsync,
   dictionarySearchPromise,
-  dictionarySearchRawGenerator
+  dictionarySearchRawGenerator,
+  dictionarySearchThreaded
 };
