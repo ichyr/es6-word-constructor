@@ -1,6 +1,6 @@
 {
   "name": "es6-word-constructor",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Application to train async possibilities of ES6/7 by creating a list of all words that can be generated from given set of letters",
   "main": "index.js",
   "directories": {
