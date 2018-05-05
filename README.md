@@ -10,7 +10,7 @@ General tasks
 - [x] Generate array of arrays with words, based on first letter
 - [x] read input from input file (input is specified as word (no trailing spaces or other characters as this will be treated as another character) in `input/input.txt` file)
 - [x] set up repo and write down tasks
-- [ ] communicate progress while working in console
+- [x] communicate progress while working in console
 
 Approaches to implement
 ---------------

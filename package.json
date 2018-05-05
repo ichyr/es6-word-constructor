@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/ichyr/es6-word-constructor#readme",
   "dependencies": {
-    "progress": "^2.0.0"
+    "cli-progress": "^1.8.0"
   }
 }

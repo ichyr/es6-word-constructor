@@ -19,12 +19,14 @@ function simpleSearchAsync(input, dictionary, cb) {
   cb(simpleSearch(input, dictionary));
 }
 
-function simpleSearchPromise(input, dictionary) {
+function simpleSearchPromise(input, dictionary, progressBar) {
   return new Promise(function(resolve, reject) {
     try {
       resolve(simpleSearch(input, dictionary));
     } catch (error) {
       reject(error);
+    } finally {
+      progressBar.increment();
     }
   });
 }
