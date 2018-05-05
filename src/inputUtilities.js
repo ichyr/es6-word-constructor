@@ -1,5 +1,13 @@
 const { generateAllPermutations } = require('./heapAlgo');
 const { createInitialDictionary, digestChunk } = require('./dictionaryUtils');
+const _cliProgress = require('cli-progress');
+const progressBar = new _cliProgress.Bar(
+  {
+    format:
+      'Generating user input combinations [{bar}] {percentage}% | Finished {value}/{total} parts | ETA {eta}s'
+  },
+  _cliProgress.Presets.shades_grey
+);
 
 Set.prototype.union = function(setB) {
   var union = new Set(this);
@@ -8,6 +16,7 @@ Set.prototype.union = function(setB) {
   }
   return union;
 };
+
 /**
  *
  *
@@ -16,12 +25,15 @@ Set.prototype.union = function(setB) {
  */
 function generatePermutationsForAllItems(arr) {
   let perm = new Set(arr);
+  progressBar.start(arr.length, 0);
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i];
     const itemArr = [...item];
     const itemPermutations = generateAllPermutations(itemArr);
     perm = perm.union(itemPermutations);
+    progressBar.increment();
   }
+  progressBar.stop();
   return perm;
 }
 
@@ -90,9 +102,20 @@ exports.generateInputSetOriginal = function(arr) {
  * @returns {Array<String>} sorted array of all permutations for given input
  */
 exports.generateInputSet = function(arr) {
+  const start = new Date();
+  console.log('🕰', ' STARTED GENERATING USER INPUT PEPRMUTATIONS');
   const data = generateInitialSet(arr);
   const permutations = generatePermutationsForAllItems([...data]);
-  // return [...permutations].sort();
   const dictionary = createInitialDictionary();
-  return digestChunk(permutations, dictionary);
+  const result = digestChunk(permutations, dictionary);
+  const end = new Date();
+  console.log(
+    '🎉',
+    ' GENERATED ',
+    permutations.size,
+    ' PERMUTATIONS WHICH TOOK ',
+    end - start,
+    'ms'
+  );
+  return result;
 };
