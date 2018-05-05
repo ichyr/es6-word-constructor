@@ -9,7 +9,7 @@ const _cliProgress = require('cli-progress');
 const progressBar = new _cliProgress.Bar(
   {
     format:
-      'Checking dictionary sections [{bar}] {percentage}% | Finished {value}/{total} sections'
+      'Checking dictionary sections [{bar}] {percentage}% | Finished {value}/{total} sections | ETA {eta}s'
   },
   _cliProgress.Presets.shades_grey
 );

@@ -4,7 +4,7 @@ exports.printResult = function({ start, correctWords }) {
   const end = Date.now();
   console.log('⏰', ' it took ', end - start, ' ms to finish');
   console.log('📖', ` found ${correctWords.length} words in dictionary`);
-  console.log('They are the following', ...correctWords);
+  console.log('They are the following', ...correctWords.sort());
 };
 
 exports.digestDataChunk = function(dictionary, digestChunk, count) {
