@@ -17,6 +17,7 @@ Approaches to implement
 - [x] Thunks
 - [x] Promise
 - [x] Generators
+- [x] Threaded Callbacks (with ChildProcess .fork() usage)
 
 Notes
 ---------------
