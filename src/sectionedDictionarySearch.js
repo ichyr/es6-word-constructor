@@ -4,11 +4,7 @@ const {
   simpleSearchPromise
 } = require('./simpleSearch');
 const { makeThunk } = require('./03_thunks/00_utils');
-const {
-  startPool,
-  endPool,
-  execute
-} = require('./10_concurrency/01_tread_pool');
+const { ThreadPool } = require('./10_concurrency/01_tread_pool');
 
 /**
  * Function that uses Array.indexOf to find occurances of words in dictionary
@@ -17,19 +13,25 @@ const {
  * @param {string[]} dictionary - content of dictionary
  * @returns {string[]} list of words from input array, found in dictionary
  */
-function dictionarySearch(input, dictionary) {
+function dictionarySearch(input, dictionary, cb) {
   let result = [];
-  function digestSimpleSearchAsync(data) {
+  let counter = Object.keys(dictionary);
+
+  function onProcessFinish(key) {
+    counter = counter.filter(elem => elem !== key);
+    return counter.length ? null : cb(result);
+  }
+  function digestSimpleSearchAsync(data, key) {
     result = [...result, ...data];
+    onProcessFinish(key);
   }
 
-  startPool();
+  const pool = new ThreadPool();
 
   for (const key in dictionary) {
-    execute(input[key], dictionary[key], digestSimpleSearchAsync);
+    pool.execute(input[key], dictionary[key], key, digestSimpleSearchAsync);
   }
 
-  endPool();
   return result;
 }
 /**

@@ -1,26 +1,61 @@
 const { fork } = require('child_process');
+
 const POOL_CAPACITY = 4;
 
-const pool = [];
+class ThreadPool {
+  constructor() {
+    this.pool = [];
+    this.nextIndex = 0;
+    this.startPool(POOL_CAPACITY);
+  }
+  /**
+   * Get index of next thread for round robin algorithm
+   *
+   * @returns {number}
+   * @memberof ThreadPool
+   */
+  getNextIndex() {
+    const idx = this.nextIndex;
+    this.nextIndex = idx === this.pool.length - 1 ? 0 : idx + 1;
+    return idx;
+  }
 
-let nextIndex = 0;
-function getNextIndex() {
-  return nextIndex === 3 ? 0 : nextIndex++;
+  /**
+   * Starts pool of child processes
+   *
+   * @param {any} count number of threads to start in the pool
+   * @memberof ThreadPool
+   */
+  startPool(count) {
+    for (let i = 0; i < count; i++) {
+      this.pool.push(fork('../10_concurrency/02_search.js'));
+    }
+  }
+
+  /**
+   *  Schedules task based on round robin algorithm for child processes.
+   *
+   * @param {any} input array of strings from input belonging to part `key`
+   * @param {any} dictionary array of string from dictionary belonging to part `key`
+   * @param {any} key descriptor of section of input/dictionary
+   * @param {any} cb callback to be called when
+   * @memberof ThreadPool
+   */
+  execute(input, dictionary, key, cb) {
+    const idx = this.getNextIndex();
+    const data = { input, dictionary };
+    this.pool[idx].send(data);
+    this.pool[idx].on('message', cb);
+  }
+
+  /**
+   * Finishes all threads in thread pool
+   *
+   * @memberof ThreadPool
+   */
+  endPool() {
+    this.pool.forEach(fork => fork.kill());
+  }
 }
 
-exports.startPool = function() {
-  for (let i = 0; i < POOL_CAPACITY; i++) {
-    pool.push(fork('../10_concurrency/02_search.js'));
-  }
-};
-
-exports.execute = function(input, dictionary, cb) {
-  const idx = getNextIndex();
-  const data = { input, dictionary };
-  pool[idx].send(data);
-  pool[idx].on('message', cb);
-};
-
-exports.endPool = function() {
-  pool.forEach(fork => fork.kill());
-};
+exports.ThreadPool = ThreadPool;
