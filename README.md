@@ -10,6 +10,7 @@ General tasks
 - [x] Generate array of arrays with words, based on first letter
 - [x] read input from input file (input is specified as word (no trailing spaces or other characters as this will be treated as another character) in `input/input.txt` file)
 - [x] set up repo and write down tasks
+- [ ] communicate progress while working in console
 
 Approaches to implement
 ---------------
@@ -18,6 +19,24 @@ Approaches to implement
 - [x] Promise
 - [x] Generators
 - [x] Threaded Callbacks (with ChildProcess .fork() usage)
+
+
+Input
+---------------
+Dictionary file is located under `/lib` folder. User input file is `input/input.txt`.
+User input file is read, then each character is treated as separate input.
+
+e.g. `space shuttle` will be treated as `['s','p','a','c','e',' ','s','h','u','t','t','l','e']` - thus 13 symbols.
+
+
+Running application
+----------------
+1. Install node
+2. Run `npm i` in the root
+3. To run program you need to navigate to `src` folder and select one ofthe folders called `01_...` to `06_...`.
+4. go inside one of them anre run filename that starts with `01_....index.js`.
+
+
 
 Notes
 ---------------
