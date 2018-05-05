@@ -38,6 +38,14 @@ function dictionarySearchThreaded(input, dictionary, cb) {
   let results = [];
   let counter = Object.keys(dictionary);
 
+  /**
+   * We start with `counter` variable set to array of all keys in dictionary object.
+   * After finishing searching specific key in dictionary we call this function.
+   * It filters out finished key from initial array. Once array is finished we
+   * call callback argument with list of all matched words and kill all processes in the pool
+   *
+   * @param {string} key for which search was finished
+   */
   function onProcessFinish(key) {
     counter = counter.filter(elem => elem !== key);
     if (!counter.length) {
@@ -46,6 +54,11 @@ function dictionarySearchThreaded(input, dictionary, cb) {
     }
   }
 
+  /**
+   * Adds matched variables to results array. calls onProcessFinish for finished key.
+   *
+   * @param {any} { result, key }
+   */
   function digestSimpleSearchAsync({ result, key }) {
     results = [...results, ...result];
     onProcessFinish(key);
@@ -111,6 +124,15 @@ function dictionarySearchRawGenerator(input, dictionary, cb) {
   // store those things in intermediate promises and then sequence their responses
   // sequentially -> run them after yield keyword
   function* digestInput(input, dictionary) {
+    // const parallel = {};
+    // for (const key in dictionary) {
+    //   parallel[key] = simpleSearch(input[key], dictionary[key]);
+    // }
+    // for (const key in dictionary) {
+    //   yield parallel[key];
+    // }
+
+    // sequential
     for (const key in dictionary) {
       yield simpleSearch(input[key], dictionary[key]);
     }
